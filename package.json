@@ -1,0 +1,24 @@
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  },
+  "workspaces": [
+    "services/*",
+    "lib"
+  ],
+  "scripts": {
+    "lint": "lerna exec yarn lint",
+    "test": "lerna exec yarn test",
+    "coverage": "",
+    "deploy:dev": "",
+    "deploy:prod": "",
+    "deploy:frontend:dev": "",
+    "deploy:frontend:prod": "",
+    "remove:all:dev": "",
+    "remove:all:prod": "",
+    "prettier": "",
+    "prettier:ci": ""
+  }
+}

@@ -1,0 +1,12 @@
+node_modules
+.webpack
+.env*
+.dynamodb
+coverage
+jwt*.key
+jwt*.pub
+
+mfa-*.sh
+.serverless/
+.DS_Store
+output/
