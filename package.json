@@ -2,23 +2,25 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.20.2"
+    "aws-sdk-mock": "5.0.0",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "2.20.0",
+    "jest": "24.9.0",
+    "jest-junit": "10.0.0",
+    "lambda-wrapper": "0.3.0",
+    "swagger-cli": "2.3.5"
   },
   "workspaces": [
     "services/*",
     "lib"
   ],
   "scripts": {
-    "lint": "lerna exec yarn lint",
-    "test": "lerna exec yarn test",
-    "coverage": "",
-    "deploy:dev": "",
-    "deploy:prod": "",
-    "deploy:frontend:dev": "",
-    "deploy:frontend:prod": "",
-    "remove:all:dev": "",
-    "remove:all:prod": "",
-    "prettier": "",
-    "prettier:ci": ""
+    "lint": "yarn lint:eslint && yarn lint:swagger",
+    "lint:eslint": "eslint .",
+    "lint:swagger": "yarn swagger:merge && yarn swagger:lint",
+    "test": "jest",
+    "test:tdd": "jest --watch",
+    "test:coverage": "jest --coverage"
   }
 }
