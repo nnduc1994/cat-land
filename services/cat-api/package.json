@@ -13,6 +13,7 @@
     "@middy/core": "^1.0.0-beta.8",
     "@middy/http-cors": "^1.0.0-beta.8",
     "mongoose": "^5.7.5",
+    "@hapi/boom": "^9.1.0",
     "common_lib": "1.0.0"
   },
   "devDependencies": {

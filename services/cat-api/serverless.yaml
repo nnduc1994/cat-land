@@ -1,6 +1,6 @@
 frameworkVersion: '>=1.38.0 <2.0.0'
 
-service: service_1
+service: cat-api
 
 provider:
   name: aws
@@ -34,7 +34,7 @@ custom:
 
 
 functions:
-  list-stuff:
+  cat-list:
     handler: src/list.handler
     events:
       - http:
@@ -50,5 +50,18 @@ functions:
                 }
           cors: true
     environment:
-      mongoUser: ${self:custom.mongoUser}
-      mongoPassword: ${self:custom.mongoPassword}
+      mongoUser: ${self:custom.mongoUser.${self:provider.stage}}
+      mongoPassword: ${self:custom.mongoPassword.${self:provider.stage}}
+  
+  cat-get:
+    handler: src/get.handler
+    events:
+      - http:
+          path: get/{catId}
+          method: get
+          cors: true
+    environment:
+      mongoUser: ${self:custom.mongoUser.${self:provider.stage}}
+      mongoPassword: ${self:custom.mongoPassword.${self:provider.stage}} 
+
+  
