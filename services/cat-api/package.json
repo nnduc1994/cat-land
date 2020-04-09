@@ -1,0 +1,36 @@
+{
+  "name": "routing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serverless offline",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@middy/core": "^1.0.0-beta.8",
+    "@middy/http-cors": "^1.0.0-beta.8",
+    "mongoose": "^5.7.5",
+    "common_lib": "1.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "babel-plugin-source-map-support": "^2.1.1",
+    "copy-webpack-plugin": "^5.1.1",
+    "lambda-wrapper": "0.3.0",
+    "serverless": "1.55.1",
+    "serverless-offline": "^5.12.1",
+    "serverless-prune-plugin": "^1.4.1",
+    "serverless-webpack": "^5.3.1",
+    "webpack": "^4.41.2",
+    "webpack-node-externals": "^1.7.2"
+  }
+}

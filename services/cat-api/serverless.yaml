@@ -1,0 +1,54 @@
+frameworkVersion: '>=1.38.0 <2.0.0'
+
+service: service_1
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: eu-west-1
+
+plugins:
+  - serverless-offline
+  - serverless-prune-plugin
+  - serverless-webpack
+  # - serverless-plugin-aws-alerts
+
+
+   
+custom:
+  # plugins
+  # prune:
+  #   automatic: true
+  #   number: 1
+  webpack:
+    excludeFiles: '**/*.test.js'
+    packager: 'yarn'
+    includeModules: true
+  mongoUser:
+    dev: cat-db-user
+    prod:
+  mongoPassword:
+    dev: myTest123
+    prod:
+
+
+functions:
+  list-stuff:
+    handler: src/list.handler
+    events:
+      - http:
+          path: list
+          method: get
+          request: 
+            template:
+              application/json: > 
+                {
+                  "limit": "$input.params('limit')",
+                  "offset": "$input.params(offset)"",
+                  "name": "$input.param(name)"
+                }
+          cors: true
+    environment:
+      mongoUser: ${self:custom.mongoUser}
+      mongoPassword: ${self:custom.mongoPassword}
