@@ -38,7 +38,7 @@ functions:
     handler: src/list.handler
     events:
       - http:
-          path: list
+          path: v1/cats
           method: get
           request: 
             template:
@@ -57,7 +57,7 @@ functions:
     handler: src/get.handler
     events:
       - http:
-          path: get/{catId}
+          path: v1/cats/{catId}
           method: get
           cors: true
     environment:

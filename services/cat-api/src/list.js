@@ -17,7 +17,6 @@ mongoose.connect(connectionString);
 const handler = async (event) => {
   try {
     const { limit, offset, name } = event.queryStringParameters;
-
     let findObject = { };
     if (name) {
       findObject = { name: { $regex: name, $options: 'i' } };
@@ -27,7 +26,9 @@ const handler = async (event) => {
       .limit(Number(limit))
       .skip(Number(offset));
 
-    return cats;
+    const total = await CatModel.count(findObject);
+
+    return { cats, total };
   } catch (e) {
     throw boom.internal();
   }

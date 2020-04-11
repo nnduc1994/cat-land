@@ -12,6 +12,7 @@
     "swagger-cli": "2.3.5"
   },
   "workspaces": [
+    "frontend",
     "services/*",
     "lib"
   ],
