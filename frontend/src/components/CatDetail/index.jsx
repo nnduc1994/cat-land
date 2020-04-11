@@ -43,7 +43,7 @@ export const CatDetail = () => {
   return(
     <Card className={classes.root}>
       <CardContent>
-          <Avatar className={classes.avatar} src='https://www.kindpng.com/picc/m/41-414046_transparent-funny-faces-png-grumpy-cat-face-transparent.png' />
+          <Avatar className={classes.avatar} src={cat.pictureURL} />
             <Typography variant="h6" gutterBottom>
               <strong>Name:</strong> {cat.name}
             </Typography>

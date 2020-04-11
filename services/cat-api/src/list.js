@@ -16,10 +16,18 @@ mongoose.connect(connectionString);
 
 const handler = async (event) => {
   try {
-    const { limit, offset, name } = event.queryStringParameters;
+    const {
+      limit, offset, name, origin,
+    } = event.queryStringParameters;
+
     let findObject = { };
+
     if (name) {
       findObject = { name: { $regex: name, $options: 'i' } };
+    }
+
+    if (origin) {
+      findObject = { ...findObject, origin: { $regex: origin, $options: 'i' } };
     }
 
     const cats = await CatModel.find(findObject)

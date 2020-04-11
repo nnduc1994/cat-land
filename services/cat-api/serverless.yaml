@@ -45,8 +45,9 @@ functions:
               application/json: > 
                 {
                   "limit": "$input.params('limit')",
-                  "offset": "$input.params(offset)"",
-                  "name": "$input.param(name)"
+                  "offset": "$input.params(offset)",
+                  "name": "$input.param(name)",
+                  "origin": "$input.param(origin)"
                 }
           cors: true
     environment:

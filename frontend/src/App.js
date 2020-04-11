@@ -20,7 +20,7 @@ function App() {
 
         </Toolbar>
       </AppBar>
-      <Container>
+      <Container className="App-main-content">
         <Router>
           <Switch>
                 <Route exact path="/" component={CatList} />

@@ -8,20 +8,40 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
+
 import axios from 'axios';
 import Config from '../../config';
+import { SearchForm } from '../common/SearchForm';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  search: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(1.5),
+    },
+  }
+}));
 
 export const CatList = () => {
+  const classes = useStyles();
+
   const [limit, setLimit] = useState(10);
   const [cats, setCats] = useState([]);
   const [offset, setOffset] = useState(0);
   const[currentPage, setCurrentPage] = useState(0);
   const [total, setTotal] = useState(0);
+  const [name, setNameQuery] = useState("");
+  const [origin, setOrigin] = useState("");
   
   useEffect( () => {
     async function fetchCats() {
       try {
-        const response = await axios.get(`${Config.backendURL}/v1/cats?limit=${limit}&offset=${offset}`);
+        const response =
+         await axios.get(`${Config.backendURL}/v1/cats?limit=${limit}&offset=${offset}&name=${name}&origin=${origin}`);
         setCats(response.data.cats);
         setTotal(response.data.total)
       }
@@ -30,7 +50,7 @@ export const CatList = () => {
       } 
     }
     fetchCats();  
-  }, [limit, offset]);
+  }, [limit, name, offset, origin, setCurrentPage]);
 
   const handleChangePage = (e, page) => {
     if(page < currentPage) {
@@ -43,61 +63,76 @@ export const CatList = () => {
     }
   }
 
-  const handleChangeRowsPerPage = (event) => {
-    setLimit(parseInt(event.target.value, 10));
-    setCurrentPage(0);
-  };
+  const handleChangeNameQuery = (nameToSearch) => {
+    setOffset(0);
+    setNameQuery(nameToSearch);
+  }
+
+  const handleChangeOriginQuery = (originToSearch) => {
+    setOffset(0);
+    setOrigin(originToSearch);
+  }
 
   const emptyRows = limit - Math.min(limit, total - currentPage * limit);
 
   return(
-    <TableContainer component={Paper}>
-    <Table aria-label="custom pagination table">
-      <TableHead>
-          <TableRow>
-            <TableCell>Breed Name</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Temperament</TableCell>
-            <TableCell>Origin</TableCell>
-          </TableRow>
-        </TableHead>
-      <TableBody>
-        { 
-          cats.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                <a href={`/cats/${row._id}`}>{row.name}</a>
-              </TableCell>
-              <TableCell>{row.description}</TableCell>
-              <TableCell>{row.temperament}</TableCell>
-              <TableCell>{row.origin}</TableCell>
-            </TableRow>
-        ))}
+    <div>
+        <div className={classes.search}>
+          <SearchForm searchText="country origin" chipColor="primary" currentSearchString={origin} onSubmit={handleChangeOriginQuery} ></SearchForm>
+          <SearchForm searchText="breed name" currentSearchString={name} onSubmit={handleChangeNameQuery} ></SearchForm>
+        </div>
+        <TableContainer component={Paper}>
+          <Table aria-label="custom pagination table">
+            <TableHead>
+                <TableRow>
+                  <TableCell>Breed Name</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Temperament</TableCell>
+                  <TableCell>Origin</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+            <TableBody>
+              { 
+                cats.map((cat) => (
+                  <TableRow key={cat.name}>
+                    <TableCell component="th" scope="row">
+                      <a href={`/cats/${cat._id}`}>{cat.name}</a>
+                    </TableCell>
+                    <TableCell>{cat.description}</TableCell>
+                    <TableCell>{cat.temperament}</TableCell>
+                    <TableCell>{cat.origin}</TableCell>
+                    <TableCell>          
+                      <Avatar src={cat.pictureURL} />
+                    </TableCell>
+                  </TableRow>
+              ))}
 
-        {emptyRows > 0 && (
-          <TableRow style={{ height: 53 * emptyRows }}>
-            <TableCell colSpan={6} />
-          </TableRow>
-        )}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TablePagination
-            colSpan={3}
-            count={total}
-            rowsPerPage={limit}
-            rowsPerPageOptions={[1,5, 10, 15, 20]}
-            page={currentPage}
-            SelectProps={{
-              inputProps: { 'aria-label': 'rows per page' },
-              native: true,
-            }}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </TableRow>
-      </TableFooter>
-    </Table>
-  </TableContainer>
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={3}
+                  count={total}
+                  rowsPerPage={limit}
+                  rowsPerPageOptions={[]}
+                  page={currentPage}
+                  SelectProps={{
+                    inputProps: { 'aria-label': 'rows per page' },
+                    native: true,
+                  }}
+                  onChangePage={handleChangePage}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+      </TableContainer>
+    </div>
+   
   );
 }
