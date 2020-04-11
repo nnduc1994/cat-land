@@ -23,13 +23,16 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(1.5),
     },
+  },
+  name: {
+    textDecoration: 'none'
   }
 }));
 
 export const CatList = () => {
   const classes = useStyles();
 
-  const [limit, setLimit] = useState(10);
+  const [limit] = useState(10);
   const [cats, setCats] = useState([]);
   const [offset, setOffset] = useState(0);
   const[currentPage, setCurrentPage] = useState(0);
@@ -97,7 +100,7 @@ export const CatList = () => {
                 cats.map((cat) => (
                   <TableRow key={cat.name}>
                     <TableCell component="th" scope="row">
-                      <a href={`/cats/${cat._id}`}>{cat.name}</a>
+                      <a className={classes.name} href={`/cats/${cat._id}`}>{cat.name}</a>
                     </TableCell>
                     <TableCell>{cat.description}</TableCell>
                     <TableCell>{cat.temperament}</TableCell>
