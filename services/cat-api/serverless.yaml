@@ -5,7 +5,7 @@ service: cat-api
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: dev
+  stage: ${opt:stage, 'dev'} # Set the default stage used. Default is dev
   region: eu-west-1
 
 plugins:
@@ -26,16 +26,19 @@ custom:
     packager: 'yarn'
     includeModules: true
   mongoUser:
-    dev: cat-db-user
-    prod:
+    dev: cat-db-dev
+    prod: ${ssm:/cat-land/${self:provider.stage}/mongo-user~true}
   mongoPassword:
-    dev: myTest123
-    prod:
-
+    dev: Abcdev123
+    prod: ${ssm:/cat-land/${self:provider.stage}/mongo-password~true}
+  mongoDB:
+    dev: cat-api-dev
+    prod: cat-api-prod
 
 functions:
   cat-list:
     handler: src/list.handler
+    timeout: 10
     events:
       - http:
           path: v1/cats
@@ -53,7 +56,8 @@ functions:
     environment:
       mongoUser: ${self:custom.mongoUser.${self:provider.stage}}
       mongoPassword: ${self:custom.mongoPassword.${self:provider.stage}}
-  
+      mongoDB: ${self:custom.mongoDB.${self:provider.stage}}
+      
   cat-get:
     handler: src/get.handler
     events:
@@ -64,5 +68,6 @@ functions:
     environment:
       mongoUser: ${self:custom.mongoUser.${self:provider.stage}}
       mongoPassword: ${self:custom.mongoPassword.${self:provider.stage}} 
+      mongoDB: ${self:custom.mongoDB.${self:provider.stage}}
 
   

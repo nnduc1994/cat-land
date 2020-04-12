@@ -10,11 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/boom": "^9.1.0",
     "@middy/core": "^1.0.0-beta.8",
     "@middy/http-cors": "^1.0.0-beta.8",
-    "mongoose": "^5.7.5",
-    "@hapi/boom": "^9.1.0",
-    "common_lib": "1.0.0"
+    "common_lib": "1.0.0",
+    "mongoose": "^5.7.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",

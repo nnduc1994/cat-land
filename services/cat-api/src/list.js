@@ -9,13 +9,17 @@ import boom from '@hapi/boom';
 
 const mongoose = require('mongoose');
 
-const connectionString = `mongodb://${process.env.mongoUser}:${process.env.mongoPassword}@cluster0-shard-00-00-vrhf8.mongodb.net:27017,cluster0-shard-00-01-vrhf8.mongodb.net:27017,cluster0-shard-00-02-vrhf8.mongodb.net:27017/cat-api-dev?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority`;
-
-mongoose.Promise = global.Promise;
-mongoose.connect(connectionString);
 
 const handler = async (event) => {
   try {
+    const connectionString = `mongodb+srv://${process.env.mongoUser}:${process.env.mongoPassword}@cluster0-vrhf8.mongodb.net/${process.env.mongoDB}?retryWrites=true&w=majority`;
+    mongoose.Promise = global.Promise;
+
+    const connector = await mongoose.connect(connectionString,
+      {
+        useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true,
+      });
+
     const {
       limit, offset, name, origin,
     } = event.queryStringParameters;
@@ -36,6 +40,7 @@ const handler = async (event) => {
 
     const total = await CatModel.count(findObject);
 
+    await connector.disconnect();
     return { cats, total };
   } catch (e) {
     throw boom.internal();

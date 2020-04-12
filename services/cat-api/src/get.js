@@ -10,17 +10,20 @@ import boom from '@hapi/boom';
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongoose').Types;
 
-const connectionString = `mongodb://${process.env.mongoUser}:${process.env.mongoPassword}@cluster0-shard-00-00-vrhf8.mongodb.net:27017,cluster0-shard-00-01-vrhf8.mongodb.net:27017,cluster0-shard-00-02-vrhf8.mongodb.net:27017/cat-api-dev?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority`;
-
-mongoose.Promise = global.Promise;
-mongoose.connect(connectionString);
-
 const handler = async (event) => {
   try {
+    const connectionString = `mongodb+srv://${process.env.mongoUser}:${process.env.mongoPassword}@cluster0-vrhf8.mongodb.net/${process.env.mongoDB}?retryWrites=true&w=majority`;
+    mongoose.Promise = global.Promise;
+
+    const connector = await mongoose.connect(connectionString,
+      {
+        useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true,
+      });
+
     const { catId } = event.pathParameters;
     if (!ObjectId.isValid(catId)) throw boom.badRequest('not valid ID');
-
     const cat = await CatModel.findById(catId);
+    await connector.disconnect();
     return cat;
   } catch (e) {
     throw e;

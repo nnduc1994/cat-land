@@ -1,24 +1,35 @@
-This is a boilerplate for new Serverless project. The project structure is descripted below:
+This is a boilerplate for new Serverless project. 
 
-The project used mono repo style (lib and services) and using yarn workspace to handle dependencies easily
+The project used mono repo style (frontend, lib and services) and using `yarn workspace` to handle dependencies easily. To install all requires dependencies for lib, frontend and all services, run `yarn install` in the root of the project
 
-To install all requires dependencies for lib and all services, run `yarn install` in the root of the project
+
+# set up environment from scratch 
+If needed to set up a new environment, remember to run `bash ssm-put.sh` first to set up necessary ssm secret. 
+Remember to edit the `ssm-put.sh` before run, required mongoDB user and mongoDB password need to be updated
+Command: `ssm-put.sh <stage> <profile>`
+
+
+# Deploy backend 
+cd to  `services/cat-api/` and run `sls deploy --stage <stage> --aws-profile <your-profile>`
+
+
+The project structure is described below:
 ```
 / - root folder
 │
+│
+└─── frontend (React)
+│
+│
 └───lib - shared library between services within project
 │    │
-│    └───dynamodb - dynamoDB mapper model and table classes
-│    │
-│    └───docs - Swagger and related docs
-│    │
-│    └───schemas - Joi Schema files
+│    └───models - Monggoes models and classes 
 │    │
 │    └───utils
 │
 └───services - Code for APIs
 │    │
-│    └───service 1
+│    └───cat-api
 │    │    │
 │    │    └───src
 │    │    │     └───get.js
