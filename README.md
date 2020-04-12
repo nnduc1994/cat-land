@@ -1,5 +1,5 @@
 # Cat land full stack app
-This is a demo of the full-stack built with the following stack: 
+This is a demo of the full-stack web-app built with the following stack: 
 * Backend: Serverless, AWS lambda, MongoDB Atlast, Mongoose
 * Frontend: React + Material UI component
 * Static frontend hosted in : AWS S3
