@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,6 +14,7 @@ import axios from 'axios';
 import Config from '../../config';
 import { SearchForm } from '../common/SearchForm';
 import { makeStyles } from '@material-ui/core/styles';
+import { SpinnerContext } from '../../contexts/SpinerContext'
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -23,14 +24,12 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(1.5),
     },
-  },
-  name: {
-    textDecoration: 'none'
   }
 }));
 
 export const CatList = () => {
   const classes = useStyles();
+  const { setIsShowingSpinner } = useContext(SpinnerContext)
 
   const [limit] = useState(10);
   const [cats, setCats] = useState([]);
@@ -43,17 +42,20 @@ export const CatList = () => {
   useEffect( () => {
     async function fetchCats() {
       try {
+        setIsShowingSpinner(true)
         const response =
          await axios.get(`${Config.backendURL}/v1/cats?limit=${limit}&offset=${offset}&name=${name}&origin=${origin}`);
         setCats(response.data.cats);
         setTotal(response.data.total)
+        setIsShowingSpinner(false)
       }
       catch(e) {
         console.log('Error while fetching list of cat', e)
+        setIsShowingSpinner(false)
       } 
     }
     fetchCats();  
-  }, [limit, name, offset, origin, setCurrentPage]);
+  }, [limit, name, offset, origin, setCurrentPage, setIsShowingSpinner]);
 
   const handleChangePage = (e, page) => {
     if(page < currentPage) {
@@ -100,7 +102,7 @@ export const CatList = () => {
                 cats.map((cat) => (
                   <TableRow key={cat.name}>
                     <TableCell component="th" scope="row">
-                      <a className={classes.name} href={`/cats/${cat._id}`}>{cat.name}</a>
+                      <a href={`/cats/${cat._id}`}>{cat.name}</a>
                     </TableCell>
                     <TableCell>{cat.description}</TableCell>
                     <TableCell>{cat.temperament}</TableCell>

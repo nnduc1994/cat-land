@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 import Card from '@material-ui/core/Card';
@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { SpinnerContext } from '../../contexts/SpinerContext'
+import Config from '../../config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const CatDetail = () => {
   const classes = useStyles();
+  const { setIsShowingSpinner } = useContext(SpinnerContext)
 
   let { id } = useParams();
   const [cat, setCat] = useState({ });
@@ -30,15 +33,18 @@ export const CatDetail = () => {
   useEffect( () => {
     async function fetchCat() {
       try {
-        const response = await axios.get(`http://localhost:3000/v1/cats/${id}`);
-        setCat(response.data)
+        setIsShowingSpinner(true);
+        const response = await axios.get(`${Config.backendURL}/v1/cats/${id}`);
+        setCat(response.data);
+        setIsShowingSpinner(false);
       }
       catch(e) {
+        setIsShowingSpinner(false);
         console.log('Error while fetching cat', e)
       } 
     }
     fetchCat();  
-  }, [id]);
+  }, [id, setIsShowingSpinner]);
 
   return(
     <Card className={classes.root}>

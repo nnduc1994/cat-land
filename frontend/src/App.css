@@ -1,7 +1,9 @@
 .App {
   text-align: center;
 }
-
+.App a {
+  text-decoration: none;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -30,8 +32,15 @@
 
 .App-main-content {
   margin-top: 2rem;
+  margin-bottom: 5rem;
 }
 
+
+body {
+  background-image: url("../src/cat.png");
+  background-position: left bottom; /*Positioning*/
+  background-repeat: no-repeat; /*Prevent showing multiple background images*/
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
