@@ -70,11 +70,13 @@ export const CatList = () => {
 
   const handleChangeNameQuery = (nameToSearch) => {
     setOffset(0);
+    setCurrentPage(0);
     setNameQuery(nameToSearch);
   }
 
   const handleChangeOriginQuery = (originToSearch) => {
     setOffset(0);
+    setCurrentPage(0);
     setOrigin(originToSearch);
   }
 
