@@ -1,14 +1,14 @@
 /* eslint-disable no-useless-catch */
-/* eslint-disable import/prefer-default-export */
 
-import middy from '@middy/core';
-import cors from '@middy/http-cors';
-import { defaultJson, boomErrorHandler } from 'common_lib/middleware';
-import CatModel from 'common_lib/models/cat';
-import boom from '@hapi/boom';
-
+const cors = require('@middy/http-cors');
+const boom = require('@hapi/boom');
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongoose').Types;
+const middy = require('@middy/core');
+
+const { defaultJson, boomErrorHandler } = require('common_lib/middleware');
+const CatModel = require('common_lib/models/cat');
+
 
 const handler = async (event) => {
   try {
@@ -37,4 +37,4 @@ const lambda = middy(handler)
   .use(boomErrorHandler);
 
 
-export { lambda as handler };
+module.exports = { handler: lambda };
