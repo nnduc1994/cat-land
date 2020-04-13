@@ -10,11 +10,22 @@ App features include:
 * Pagination is handled in backend to optimize performance
 * User can click on the cat breed's name to see a cat breed's page
 
+Backend REST API:
+* `<backend_URL>/v1/cats/${id}` : Get cat breed by Id
+* `<backend_URL>}/v1/cats?limit=${limit}&offset=${offset}&name=${name}&origin=${origin}`
+  Where:
+   * limit = is amount of cat breed return by an API (default value = 10)
+   * offset = for pagination purpose. Offset mean skip the first x item (already displayed in frontend)
+   * name = breed name, for query breed by name
+   * origin = breed origin, for query breed by origin
+   * ----> name and origin query can be used as an combination
+
 ### Demo: http://cat-land-frontend.s3-website-eu-west-1.amazonaws.com/
 
 ### TODO - MISSING: 
 * Unit / Snapshot for frontend
 * Better way to connect to monogoDB atlast in AWS Lambda. For example: `set callbackWaitsForEmptyEventLoop = false on the context`, this will let's lambda to reuse existed connection rather than making new connection everytime
+* Swagger for backend API, currently it is described in the README.md 
 * CI/CD pipeline or script to deploy frontend easier. Auto the process of create S3, configure S3 and upload frontend to S3
 
 The project used mono repo style (frontend, lib and services) and using `yarn workspace` to handle dependencies easily. To install all requires dependencies for lib, frontend and all services, run `yarn install` in the root of the project
