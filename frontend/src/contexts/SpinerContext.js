@@ -1,4 +1,4 @@
-import React, {createContext, useState, useMemo} from 'react'
+import React, {createContext, useState, useMemo} from 'react';
 
 export const SpinnerContext = createContext();
 
@@ -8,7 +8,7 @@ export const SpinnerContextProvider = (props) => {
   const value = useMemo(() => ({
     isShowingSpinner,
     setIsShowingSpinner
-  }), [isShowingSpinner])
+  }), [isShowingSpinner]);
   
   return (
     <SpinnerContext.Provider value={value}>

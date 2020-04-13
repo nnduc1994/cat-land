@@ -14,7 +14,7 @@ import axios from 'axios';
 import Config from '../../config';
 import { SearchForm } from '../common/SearchForm';
 import { makeStyles } from '@material-ui/core/styles';
-import { SpinnerContext } from '../../contexts/SpinerContext'
+import { SpinnerContext } from '../../contexts/SpinerContext';
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const CatList = () => {
   const classes = useStyles();
-  const { setIsShowingSpinner } = useContext(SpinnerContext)
+  const { setIsShowingSpinner } = useContext(SpinnerContext);
 
   const [limit] = useState(10);
   const [cats, setCats] = useState([]);
@@ -42,16 +42,16 @@ export const CatList = () => {
   useEffect( () => {
     async function fetchCats() {
       try {
-        setIsShowingSpinner(true)
+        setIsShowingSpinner(true);
         const response =
          await axios.get(`${Config.backendURL}/v1/cats?limit=${limit}&offset=${offset}&name=${name}&origin=${origin}`);
         setCats(response.data.cats);
-        setTotal(response.data.total)
-        setIsShowingSpinner(false)
+        setTotal(response.data.total);
+        setIsShowingSpinner(false);
       }
       catch(e) {
-        console.log('Error while fetching list of cat', e)
-        setIsShowingSpinner(false)
+        console.log('Error while fetching list of cat', e);
+        setIsShowingSpinner(false);
       } 
     }
     fetchCats();  
@@ -59,12 +59,12 @@ export const CatList = () => {
 
   const handleChangePage = (e, page) => {
     if(page < currentPage) {
-      setOffset(offset - limit)
-      setCurrentPage(page)
+      setOffset(offset - limit);
+      setCurrentPage(page);
     }
     else {
-      setOffset(offset + limit)
-      setCurrentPage(page)
+      setOffset(offset + limit);
+      setCurrentPage(page);
     }
   }
 

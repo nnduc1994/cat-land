@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { SpinnerContext } from '../../contexts/SpinerContext'
+import { SpinnerContext } from '../../contexts/SpinerContext';
 import Config from '../../config';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const CatDetail = () => {
   const classes = useStyles();
-  const { setIsShowingSpinner } = useContext(SpinnerContext)
+  const { setIsShowingSpinner } = useContext(SpinnerContext);
 
   let { id } = useParams();
   const [cat, setCat] = useState({ });
@@ -40,7 +40,7 @@ export const CatDetail = () => {
       }
       catch(e) {
         setIsShowingSpinner(false);
-        console.log('Error while fetching cat', e)
+        console.log('Error while fetching cat', e);
       } 
     }
     fetchCat();  

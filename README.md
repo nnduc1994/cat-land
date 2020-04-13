@@ -12,6 +12,10 @@ App features include:
 
 ### Demo: http://cat-land-frontend.s3-website-eu-west-1.amazonaws.com/
 
+### TODO - MISSING: 
+* Unit / Snapshot for frontend
+* Better way to connect to monogoDB atlast in AWS Lambda. For example: `set callbackWaitsForEmptyEventLoop = false on the context`, this will let's lambda to reuse existed connection rather than making new connection everytime
+
 
 The project used mono repo style (frontend, lib and services) and using `yarn workspace` to handle dependencies easily. To install all requires dependencies for lib, frontend and all services, run `yarn install` in the root of the project
 
@@ -30,7 +34,7 @@ In another terminal `cd ` to frontend and run `yarn start` --> this will start t
 
 ## Deploy backend 
 cd to  `services/cat-api/` and run `sls deploy --stage <stage> --aws-profile <your-profile>`
-note down the AWS lambda endpoint (will need when deploy frontend)
+note down the AWS lambda endpoint (will need when deploy frontend). Make sure all the necessary ssm keys are in AWS (check **Set up environment from scratch** section) 
 
 ## Deploy frontend
 Create a new S3 bucket in AWS
@@ -78,21 +82,20 @@ The project structure is described below:
 │    └───utils
 │
 └───services - Code for APIs
-│    │
-│    └───cat-api
-│    │    │
-│    │    └───src
-│    │    │     └───get.js
-│    │    │     └───list.js
-│    │    │     └───etc...
-│    │    │
-│    │    └───package.json
-│    │    │
-│    │    └───servless.yaml (each service is a separate CF stack)
-│    │    │
-│    │    └───webpack.config.js
-│    │
-│    └───service 2
-│
-└───tests - Tests for services or utils
+    │
+    └───cat-api
+    │    │
+    │    └───src
+    │    │     └───get.js
+    │    │     └───list.js
+    │    │     └───etc...
+    │    │
+    │    └───package.json
+    │    │
+    │    └───servless.yaml (each service is a separate CF stack)
+    │    │
+    │    └───webpack.config.js
+    │
+    └───service 2
+
 ```

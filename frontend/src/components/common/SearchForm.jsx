@@ -30,7 +30,7 @@ export const SearchForm = ({searchText, currentSearchString ,onSubmit, chipColor
     else {
       setShowSearchString(false);
     }
-  }, [currentSearchString])
+  }, [currentSearchString]);
 
   const handleChangeQuery = (e) => {
     e.preventDefault();
