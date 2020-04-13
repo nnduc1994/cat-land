@@ -15,7 +15,7 @@ App features include:
 ### TODO - MISSING: 
 * Unit / Snapshot for frontend
 * Better way to connect to monogoDB atlast in AWS Lambda. For example: `set callbackWaitsForEmptyEventLoop = false on the context`, this will let's lambda to reuse existed connection rather than making new connection everytime
-
+* CI/CD pipeline or script to deploy frontend easier. Auto the process of create S3, configure S3 and upload frontend to S3
 
 The project used mono repo style (frontend, lib and services) and using `yarn workspace` to handle dependencies easily. To install all requires dependencies for lib, frontend and all services, run `yarn install` in the root of the project
 
