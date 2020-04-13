@@ -21,27 +21,14 @@ const handler = async (event) => {
       });
 
     const {
-      limit, offset, name, origin,
-    } = event.queryStringParameters;
+      limit = 10, offset = 0, name = '', origin = '',
+    } = event.queryStringParameters || {};
 
-    let findObject = { };
+    // { cats: [], total: Num}
+    const paginatedObj = await CatModel.paginationQuery(limit, offset, name, origin);
 
-    if (name) {
-      findObject = { name: { $regex: name, $options: 'i' } };
-    }
-
-    if (origin) {
-      findObject = { ...findObject, origin: { $regex: origin, $options: 'i' } };
-    }
-
-    const cats = await CatModel.find(findObject)
-      .limit(Number(limit))
-      .skip(Number(offset));
-
-    const total = await CatModel.count(findObject);
-
-    await connector.disconnect();
-    return { cats, total };
+    if (connector) await connector.disconnect();
+    return paginatedObj;
   } catch (e) {
     throw boom.internal();
   }

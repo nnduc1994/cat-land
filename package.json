@@ -1,6 +1,12 @@
 {
   "name": "root",
   "private": true,
+  "jest": {
+    "projects": [
+      "frontend/jest.config.js",
+      "services/backend.jest.config.js"
+    ]
+  },
   "devDependencies": {
     "aws-sdk-mock": "5.0.0",
     "eslint": "6.8.0",

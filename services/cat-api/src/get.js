@@ -23,7 +23,7 @@ const handler = async (event) => {
     const { catId } = event.pathParameters;
     if (!ObjectId.isValid(catId)) throw boom.badRequest('not valid ID');
     const cat = await CatModel.findById(catId);
-    await connector.disconnect();
+    if (connector) await connector.disconnect();
     return cat;
   } catch (e) {
     throw e;

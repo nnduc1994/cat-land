@@ -27,6 +27,7 @@
     "babel-plugin-source-map-support": "^2.1.1",
     "copy-webpack-plugin": "^5.1.1",
     "lambda-wrapper": "0.3.0",
+    "mockingoose": "^2.13.2",
     "serverless": "1.55.1",
     "serverless-offline": "^5.12.1",
     "serverless-prune-plugin": "^1.4.1",
