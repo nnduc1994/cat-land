@@ -34,7 +34,7 @@ export const SearchForm = ({searchText, currentSearchString ,onSubmit, chipColor
 
   const handleChangeQuery = (e) => {
     e.preventDefault();
-    onSubmit(userInput);
+    onSubmit(userInput.trim());
   }
 
   const handleOnInputChange = (e) => {
@@ -44,7 +44,7 @@ export const SearchForm = ({searchText, currentSearchString ,onSubmit, chipColor
   const handOnKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      onSubmit(userInput);
+      onSubmit(userInput.trim());
     }
   }
 
