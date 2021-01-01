@@ -20,7 +20,7 @@ Backend REST API:
    * origin = breed origin, for query breed by origin
    * ----> name and origin query can be used as an combination
 
-### Demo: http://cat-land-frontend.s3-website-eu-west-1.amazonaws.com/
+
 
 ### TODO - MISSING: 
 * Unit / Snapshot for frontend
